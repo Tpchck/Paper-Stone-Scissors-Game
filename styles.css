@@ -260,61 +260,43 @@ h1 {
     font-weight: bold;
 }
 
-#winner span{
-    opacity: 0; /* Начальная прозрачность текста */
-    animation: slideIn 1s forwards; /* Анимация текста */
-    animation-delay: 0.5s;
-}
-
 .svg-icon {
     margin: 10px;
     opacity: 0;
     animation: fadeIn 1s forwards;
 }
 
+#winner span{
+    opacity: 0;
+}
+
 .computer-wins {
     color: rgba(221, 52, 52, 0.89); /* Change text color */
     font-weight: bold; /* Make text bold */
     font-size: 21px; /* Increase font size */
-    animation: blink 1s infinite; /* Add a blinking animation */
+    animation: fadeIn 0.5s forwards;
 }
 
 .player-wins{
     color: rgba(160, 223, 96, 0.95); /* Change text color */
     font-weight: bold; /* Make text bold */
     font-size: 21px; /* Increase font size */
-    animation: blink 1s infinite; /* Add a blinking animation */
+    animation: fadeIn 0.5s forwards;
 }
 
 .tie{
     color: rgba(255, 213, 41, 0.97); /* Change text color */
     font-weight: bold; /* Make text bold */
     font-size: 21px; /* Increase font size */
-    animation: blink 1s infinite; /* Add a blinking animation */
+    animation: fadeIn 0.5s forwards;
 }
 
 @keyframes fadeIn {
-    to {
-        opacity: 1; /* Конечная прозрачность */
-    }
-}
-
-@keyframes slideIn {
     from {
-        transform: translateY(20px); /* Начальная позиция */
-        opacity: 0; /* Начальная прозрачность */
-    }
-    to {
-        transform: translateY(0); /* Конечная позиция */
-        opacity: 1; /* Конечная прозрачность */
-    }
-}
-
-@keyframes blink {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
         opacity: 0;
     }
+    to {
+        opacity: 1;
+    }
 }
+

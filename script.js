@@ -60,13 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
         winnerSpan.textContent = winner;
 
         winnerSpan.classList.remove('computer-wins', 'player-wins', 'tie');
-        if (winner === 'Computer wins!') {
-            winnerSpan.classList.add('computer-wins');
-        } else if (winner === 'You win!') {
-            winnerSpan.classList.add('player-wins');
-        } else if (winner === 'It\'s a tie!') {
-            winnerSpan.classList.add('tie');
-        }
+        setTimeout(() => {
+            if (winner === 'Computer wins!') {
+                winnerSpan.classList.add('computer-wins');
+            } else if (winner === 'You win!') {
+                winnerSpan.classList.add('player-wins');
+            } else if (winner === 'It\'s a tie!') {
+                winnerSpan.classList.add('tie');
+            }
+        }, 500); // Задержка в 500 мс перед добавлением класса
     }
 
     stoneButton.addEventListener('click', () => {
