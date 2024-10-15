@@ -1,0 +1,306 @@
+/**
+  Нормализация блочной модели
+ */
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+    padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure):where([class]) {
+    margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  dl
+):where([class]) {
+    margin-block: 0;
+}
+
+:where(dd[class]) {
+    margin-left: 0;
+}
+
+:where(fieldset[class]) {
+    margin-left: 0;
+    padding: 0;
+    border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+    list-style: none;
+}
+
+:where(address[class]) {
+    font-style: normal;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+    --paragraphMarginBottom: 24px;
+
+    margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+    margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+  Упрощаем работу с изображениями
+ */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+    font: inherit;
+}
+
+html {
+    /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+    height: 100%;
+}
+
+/**
+  Плавный скролл
+ */
+html,
+:has(:target) {
+    scroll-behavior: smooth;
+}
+
+body {
+    /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+    min-height: 100%;
+    /**
+      Унифицированный интерлиньяж
+     */
+    line-height: 1.5;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+ */
+svg *[fill] {
+    fill: currentColor
+}
+
+svg *[stroke] {
+    stroke: currentColor
+}
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+    transition-property: fill, stroke;
+}
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@font-face {
+    font-family: 'Gothic';
+    src: url('./fonts/GothicFont-Regular.woff2') format("woff2");
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+:root {
+    --main-font: "Gothic", sans-serif;
+    --light-dark-color: #0D0714;
+    --purple-color: #1D1825;
+    --green-color: #3a7c72;
+    --light-green-color: #78CFB0;
+    --grey-color: #777777;
+
+    --border-radius: 10px;
+    --border: 1px solid #3a7c72;
+}
+
+/* Основные стили для игры */
+body {
+    font-family: var(--main-font);
+    background: var(--light-dark-color);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    width: 40vw;
+    height: 45vw;
+    background-color: var(--purple-color);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    font-size: 55px;
+    color: var(--green-color);
+    margin-bottom: 20px;
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.choice-button {
+    background-color: var(--green-color);
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    width: 100vw;
+    padding: 10px 20px;
+    font-size: 23px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.choice-button:hover {
+    background-color: var(--light-green-color);
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.result #user-choice, #computer-choice {
+    width: 20vw;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.result p {
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.result span {
+    font-weight: bold;
+}
+
+#winner span{
+    opacity: 0; /* Начальная прозрачность текста */
+    animation: slideIn 1s forwards; /* Анимация текста */
+    animation-delay: 0.5s;
+}
+
+.svg-icon {
+    margin: 10px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+.computer-wins {
+    color: red; /* Change text color */
+    font-weight: bold; /* Make text bold */
+    font-size: 24px; /* Increase font size */
+    animation: blink 1s infinite; /* Add a blinking animation */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1; /* Конечная прозрачность */
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px); /* Начальная позиция */
+        opacity: 0; /* Начальная прозрачность */
+    }
+    to {
+        transform: translateY(0); /* Конечная позиция */
+        opacity: 1; /* Конечная прозрачность */
+    }
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
